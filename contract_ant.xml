@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<project name="contract_ant" basedir="." default="copyJSPs" >
+    <!-- file properties -->
+    <!-- Project settings -->
+    <property name="project.distname" value="contract"/>
+
+    <target name="copyJSPs">
+        <copy todir="C:/servers/tomcat-sog/webapps/${project.distname}">
+            <fileset dir="src/main/webapp">
+                <include name="**"/>
+                <include name="css/**"/>
+                <include name="img/**"/>
+                <include name="js/**"/>
+                <include name="reports/**"/>
+            </fileset>
+        </copy>
+    </target>
+
+</project>
