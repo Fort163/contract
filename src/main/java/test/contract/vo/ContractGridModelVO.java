@@ -2,73 +2,72 @@ package test.contract.vo;
 
 import test.contract.model.Contract;
 import test.contract.model.Man;
-import test.contract.utils.StringHelpler;
+import test.contract.utils.DateHelpler;
 
 /**
  * Created by kutyakov on 18.01.2020.
  */
-public class ContractGridModelVO {
+public class ContractGridModelVO extends ModelVO{
 
-    private Long id;
     private String fullName;
-    private Long number;
+    private String num;
     private String dateConclusion;
-    private Float price;
+    private Double insurancePremium;
     private String fromToDate;
 
     public ContractGridModelVO(){
     }
 
     public ContractGridModelVO(Contract contract) {
-
-        //this.fullName = StringHelpler.formatFIO(man.getFirstName(),man.getLastName(),man.getSecondName());
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        super(contract.getId());
+        Man man = contract.getMan();
+        this.fullName = new StringBuilder(man.getLastName())
+                        .append(" ")
+                        .append(man.getFirstName())
+                        .append(" ")
+                        .append(man.getSecondName())
+                        .toString();
+        this.num = contract.getNum();
+        this.dateConclusion = DateHelpler.localDateToString(contract.getConclusionDate());
+        this.insurancePremium = contract.getInsurancePremium();
+        this.fromToDate = new StringBuilder(DateHelpler.localDateToString(contract.getPeriodFrom()))
+                            .append("-")
+                            .append(DateHelpler.localDateToString(contract.getPeriodTo()))
+                            .toString();
     }
 
     public String getFullName() {
         return fullName;
     }
-
     public void setFullName(String fullName) {
         this.fullName = fullName;
-    }
-
-    public Long getNumber() {
-        return number;
-    }
-
-    public void setNumber(Long number) {
-        this.number = number;
     }
 
     public String getDateConclusion() {
         return dateConclusion;
     }
-
     public void setDateConclusion(String dateConclusion) {
         this.dateConclusion = dateConclusion;
-    }
-
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
     }
 
     public String getFromToDate() {
         return fromToDate;
     }
-
     public void setFromToDate(String fromToDate) {
         this.fromToDate = fromToDate;
+    }
+
+    public String getNum() {
+        return num;
+    }
+    public void setNum(String num) {
+        this.num = num;
+    }
+
+    public Double getInsurancePremium() {
+        return insurancePremium;
+    }
+    public void setInsurancePremium(Double insurancePremium) {
+        this.insurancePremium = insurancePremium;
     }
 }

@@ -17,6 +17,12 @@
         <put-attribute name="body" value="/WEB-INF/views/pages/mainContractPage.jsp"/>
     </definition>
 
+    <definition name="createContract" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/createContractPage.jsp"/>
+    </definition>
 
+    <definition name="handbook" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/views/pages/handbookPage.jsp"/>
+    </definition>
 
 </tiles-definitions>

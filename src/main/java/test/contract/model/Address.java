@@ -12,6 +12,7 @@ public class Address extends AuditEntity {
     private String index;
     private String region;
     private String district;
+    private String city;
     private String street;
     private Integer house;
     private String housing;
@@ -50,6 +51,14 @@ public class Address extends AuditEntity {
     }
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    @Column(name = "CITY")
+    public String getCity() {
+        return city;
+    }
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Column(name = "STREET")

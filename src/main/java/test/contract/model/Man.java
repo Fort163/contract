@@ -14,6 +14,7 @@ public class Man extends AuditEntity {
     private String firstName;
     private String secondName;
     private LocalDate birthDay;
+    private Pasport pasport;
     private List<Address> addressList;
 
     @Column(name = "LASTNAME")
@@ -48,6 +49,15 @@ public class Man extends AuditEntity {
         this.birthDay = birthDay;
     }
 
+    @OneToOne
+    @JoinColumn(name = "FK_MAN_ID", foreignKey = @ForeignKey(name = "PASPORT_2_MAN"))
+    public Pasport getPasport() {
+        return pasport;
+    }
+    public void setPasport(Pasport pasport) {
+        this.pasport = pasport;
+    }
+
 
     @OneToMany(mappedBy = "man")
     public List<Address> getAddressList() {
@@ -56,31 +66,6 @@ public class Man extends AuditEntity {
     public void setAddressList(List<Address> addressList) {
         this.addressList = addressList;
     }
-
-    /*@Column(
-            name = "SEX",
-            length = 1,
-            columnDefinition = "CHAR(1) NOT NULL DEFAULT 'U' CHECK (SEX IN('U', 'M', 'F'))"
-    )
-    @Enumerated(EnumType.STRING)
-    public SexEnum getSex() {
-        return this.sex;
-    }
-
-    public void setSex(SexEnum sex) {
-        this.sex = sex;
-    }*/
-
-    /*@OneToMany(
-            mappedBy = "man"
-    )
-    public List<IdCard> getIdCardList() {
-        return this.idCardList;
-    }
-
-    public void setIdCardList(List<IdCard> idCardList) {
-        this.idCardList = idCardList;
-    }*/
 
     @Override
     public boolean equals(Object o) {

@@ -5,7 +5,7 @@
     <property name="project.distname" value="contract"/>
 
     <target name="copyJSPs">
-        <copy todir="C:/servers/tomcat-sog/webapps/${project.distname}">
+        <copy todir="D:/servers/tomcat-contract/webapps/${project.distname}">
             <fileset dir="src/main/webapp">
                 <include name="**"/>
                 <include name="css/**"/>

@@ -5,27 +5,19 @@
 
     Ext.namespace( 'MainContract');
 
-    Ext.define('Standard.Model', {
-        extend: 'Ext.data.Model'
-        ,fields: [
-            {name: 'val',  type: 'string'}
-            ,{name: 'key',   type: 'int'}
-        ]
-    });
-
     Ext.define('MainContract.gridModel', {
         extend:'Ext.data.Model',
         fields:[
             {name:'id',type:'int'}
             ,{name:'fullName',type:'string'}
-            ,{name:'number',type:'int'}
+            ,{name:'num',type:'int'}
             ,{name:'dateConclusion',type:'string'}
-            ,{name:'price',type:'float'}
+            ,{name:'insurancePremium',type:'float'}
             ,{name:'fromToDate',type:'string'}
         ]
     });
 
-    MainContract.form  = function () {
+    MainContract.panel  = function () {
         return Ext.create('Ext.panel.Panel', {
             renderTo: 'contractMainDiv'
             , id : 'ContractMainPanel'
@@ -33,14 +25,14 @@
             , title: "Договоры"
             , border: 0
             , items:[
-                    {
-                        xtype: 'fieldset'
-                        , border: 0
-                        ,layout: {
-                            type: 'vbox',
-                            align: 'stretch'
-                        }
-                    , items: [
+                {
+                    xtype: 'fieldset'
+                    ,border: 0
+                    ,layout: {
+                        type: 'vbox',
+                        align: 'stretch'
+                    }
+                    ,items: [
                         {
                             xtype: 'grid'
                             ,itemId: 'searchGrid'
@@ -50,7 +42,7 @@
                                 ,model:'MainContract.gridModel'
                                 ,proxy:{
                                     type:'ajax'
-                                    ,url:'<spring:url value="/page/contract/getList"/>'
+                                    ,url:'<spring:url value="/page/contract/getContractList"/>'
                                     ,reader:{
                                         type:'json'
                                         ,root:'result'
@@ -61,7 +53,7 @@
                                 items:[
                                     {
                                         text:'Номер'
-                                        ,dataIndex:'number'
+                                        ,dataIndex:'num'
                                         ,flex:1
                                     }
                                     ,{
@@ -76,7 +68,7 @@
                                     }
                                     ,{
                                         text:'Премия'
-                                        ,dataIndex:'price'
+                                        ,dataIndex:'insurancePremium'
                                         ,flex:1
                                     }
                                     ,{
@@ -86,22 +78,27 @@
                                     }
                                 ]
                             }
+                            ,tbar:[
+                                {
+                                    xtype: 'button'
+                                    ,text : 'Создать договор'
+                                    ,handler:function (btn) {
+                                        document.location.href = '<spring:url value="/createContractPage"/>'
+                                    }
+                                }
+                                ,{
+                                    xtype: 'button'
+                                    ,text : 'Открыть договор'
+                                    ,handler:function (btn) {
+                                        var grid = btn.up('grid');
+                                        var selection = grid.getSelectionModel().getSelection()[0];
+                                        document.location.href = '<spring:url value="/createContractPage"/>'+'?contractId='+selection.data.id
+                                    }
+                                }
+                            ]
                             ,listeners:{
                                 itemdblclick:function( grid, record, item, index, e, eOpts ){
-                                    alert('a');
-                                   /* Ext.Ajax.request({
-                                        url: 'spring:url value="/page/agreementOrg/openSupplier"/>'
-                                        , params: {
-                                            id:record.data.id
-                                        }
-                                        , method: 'POST'
-                                        , success: function (resp, opt) {
-
-                                        }
-                                        , failure: function (resp, opt) {
-                                            alert('b');
-                                        }
-                                    });*/
+                                    document.location.href = '<spring:url value="/createContractPage"/>'+'?contractId='+record.data.id
                                 }
                             }
                         }
@@ -112,7 +109,7 @@
     };
 
     Ext.onReady(function () {
-        var panel = MainContract.form();
+        var panel = MainContract.panel();
         panel.show();
         var oldResize = window.onresize;
         window.onresize = function () {

@@ -10,30 +10,27 @@ import javax.validation.constraints.Size;
 @Table(name = "PASPORT")
 public class Pasport extends AuditEntity {
 
-    private Long series;
-    private Long num;
+    private Long seriesDoc;
+    private Long numDoc;
     private Man man;
 
-    @Column(name = "SERIES")
-    @Size(min=4, max=4)
-    public Long getSeries() {
-        return series;
+    @Column(name = "SERIES_DOC",length = 4)
+    public Long getSeriesDoc() {
+        return seriesDoc;
     }
-    public void setSeries(Long series) {
-        this.series = series;
-    }
-
-    @Column(name = "NUM")
-    @Size(min=6, max=6)
-    public Long getNum() {
-        return num;
-    }
-    public void setNum(Long num) {
-        this.num = num;
+    public void setSeriesDoc(Long seriesDoc) {
+        this.seriesDoc = seriesDoc;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "FK_MAN_ID", foreignKey = @ForeignKey(name = "PASPORT_2_MAN"))
+    @Column(name = "NUM_DOC",length = 6)
+    public Long getNumDoc() {
+        return numDoc;
+    }
+    public void setNumDoc(Long numDoc) {
+        this.numDoc = numDoc;
+    }
+
+    @OneToOne(mappedBy = "pasport")
     public Man getMan() {
         return man;
     }
@@ -43,22 +40,23 @@ public class Pasport extends AuditEntity {
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
         Pasport pasport = (Pasport) o;
 
-        if (series != null ? !series.equals(pasport.series) : pasport.series != null) return false;
-        if (num != null ? !num.equals(pasport.num) : pasport.num != null) return false;
+        if (seriesDoc != null ? !seriesDoc.equals(pasport.seriesDoc) : pasport.seriesDoc != null) return false;
+        if (numDoc != null ? !numDoc.equals(pasport.numDoc) : pasport.numDoc != null) return false;
         return man != null ? man.equals(pasport.man) : pasport.man == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (series != null ? series.hashCode() : 0);
-        result = 31 * result + (num != null ? num.hashCode() : 0);
+        result = 31 * result + (seriesDoc != null ? seriesDoc.hashCode() : 0);
+        result = 31 * result + (numDoc != null ? numDoc.hashCode() : 0);
         result = 31 * result + (man != null ? man.hashCode() : 0);
         return result;
     }

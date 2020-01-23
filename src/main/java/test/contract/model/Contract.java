@@ -4,30 +4,33 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
+/**
+ * Created by Павел on 19.01.2020.
+ */
 @Entity(name = "contract")
 @Table(name = "CONTRACT")
 public class Contract extends AuditEntity {
     private static final long serialVersionUID = -6098705130091335324L;
 
-    private Long num;
+    private String num;
     private LocalDate conclusionDate;
     private Double insuranceAmount;
     private Double insurancePremium;
-    private LocalDate paymentDate;
+    private LocalDate calculationDate;
     private LocalDate periodFrom;
     private LocalDate periodTo;
     private Man man;
     private PropertyType propertyType;
     private CoefficientArea coefficientArea;
     private CoefficientConstruction coefficientConstruction;
+    private String comment;
 
-    @Column(name = "NUM",unique = true)
-    @Size(min=6, max=6)
+    @Column(name = "NUM",length = 6,unique = true)
     @NotNull
-    public Long getNum() {
+    public String getNum() {
         return num;
     }
-    public void setNum(Long num) {
+    public void setNum(String num) {
         this.num = num;
     }
 
@@ -57,12 +60,13 @@ public class Contract extends AuditEntity {
         this.insurancePremium = insurancePremium;
     }
 
-    @Column(name = "PAYMENT_DATE")
-    public LocalDate getPaymentDate() {
-        return paymentDate;
+
+    @Column(name = "CALCULATION_DATE",columnDefinition = "DATE")
+    public LocalDate getCalculationDate() {
+        return calculationDate;
     }
-    public void setPaymentDate(LocalDate paymentDate) {
-        this.paymentDate = paymentDate;
+    public void setCalculationDate(LocalDate calculationDate) {
+        this.calculationDate = calculationDate;
     }
 
     @Column(name = "PERIOD_FROM",columnDefinition = "DATE")
@@ -81,6 +85,15 @@ public class Contract extends AuditEntity {
         this.periodTo = periodTo;
     }
 
+    @Column(name = "COMMENT",length = 1024)
+    public String getComment() {
+        return comment;
+    }
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "FK_MAN_ID", foreignKey = @ForeignKey(name = "CONTRACT_2_MAN"))
     public Man getMan() {
@@ -90,6 +103,7 @@ public class Contract extends AuditEntity {
         this.man = man;
     }
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "FK_PROPERTY_TYPE_ID", foreignKey = @ForeignKey(name = "CONTRACT_2_PROPERTY_TYPE"))
     public PropertyType getPropertyType() {
@@ -99,6 +113,7 @@ public class Contract extends AuditEntity {
         this.propertyType = propertyType;
     }
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "FK_COEFFICIENT_AREA_ID", foreignKey = @ForeignKey(name = "CONTRACT_2_COEFFICIENT_AREA"))
     public CoefficientArea getCoefficientArea() {
@@ -108,6 +123,7 @@ public class Contract extends AuditEntity {
         this.coefficientArea = coefficientArea;
     }
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "FK_COEFFICIENT_CONSTRUCTION_ID", foreignKey = @ForeignKey(name = "CONTRACT_2_COEFFICIENT_CONSTRUCTION"))
     public CoefficientConstruction getCoefficientConstruction() {
@@ -132,7 +148,7 @@ public class Contract extends AuditEntity {
             return false;
         if (insurancePremium != null ? !insurancePremium.equals(contract.insurancePremium) : contract.insurancePremium != null)
             return false;
-        if (paymentDate != null ? !paymentDate.equals(contract.paymentDate) : contract.paymentDate != null)
+        if (calculationDate != null ? !calculationDate.equals(contract.calculationDate) : contract.calculationDate != null)
             return false;
         if (periodFrom != null ? !periodFrom.equals(contract.periodFrom) : contract.periodFrom != null) return false;
         if (periodTo != null ? !periodTo.equals(contract.periodTo) : contract.periodTo != null) return false;
@@ -151,7 +167,7 @@ public class Contract extends AuditEntity {
         result = 31 * result + (conclusionDate != null ? conclusionDate.hashCode() : 0);
         result = 31 * result + (insuranceAmount != null ? insuranceAmount.hashCode() : 0);
         result = 31 * result + (insurancePremium != null ? insurancePremium.hashCode() : 0);
-        result = 31 * result + (paymentDate != null ? paymentDate.hashCode() : 0);
+        result = 31 * result + (calculationDate != null ? calculationDate.hashCode() : 0);
         result = 31 * result + (periodFrom != null ? periodFrom.hashCode() : 0);
         result = 31 * result + (periodTo != null ? periodTo.hashCode() : 0);
         result = 31 * result + (man != null ? man.hashCode() : 0);

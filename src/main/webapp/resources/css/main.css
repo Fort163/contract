@@ -205,3 +205,11 @@ form {
     min-height: 100%;
     max-height: 1000%;
 }
+
+.lp-button-image{
+    background:transparent url(../img/lp.png) 0 0 no-repeat !important;
+    background-position: 0 0;
+    border-color:white !important;
+    width:30px !important;
+    height:30px !important;
+}
